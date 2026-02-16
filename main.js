@@ -1,9 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
     const generateBtn = document.getElementById('generate-btn');
+    const themeBtn = document.getElementById('theme-btn');
     const numberSpans = document.querySelectorAll('.number');
+    const body = document.body;
 
-    console.log('버튼 요소:', generateBtn);
-    console.log('숫자 요소 개수:', numberSpans.length);
+    // 테마 로드
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    body.setAttribute('data-theme', savedTheme);
+    themeBtn.textContent = savedTheme === 'dark' ? '🌙' : '☀️';
+
+    // 테마 전환
+    themeBtn.addEventListener('click', () => {
+        const currentTheme = body.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        body.setAttribute('data-theme', newTheme);
+        themeBtn.textContent = newTheme === 'dark' ? '🌙' : '☀️';
+        localStorage.setItem('theme', newTheme);
+    });
 
     function getLottoColor(num) {
         if (num <= 10) return '#fbc400';
